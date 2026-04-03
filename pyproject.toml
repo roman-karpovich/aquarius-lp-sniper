@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "aquarius-lp-sniper"
+version = "0.1.0"
+description = "Dust LP sniper for Aquarius CLMM concentrated pools"
+authors = ["Roman Karpovich <fpm.th13f@gmail.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+stellar-sdk = {version = "^12.2.1", extras = ["aiohttp"]}
+aiohttp = "^3.11.0"
+loguru = "^0.7.3"
+python-dotenv = "^1.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
