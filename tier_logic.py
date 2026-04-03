@@ -103,10 +103,7 @@ def classify_pool(
         beyond = any(t < our_min for t in ticks) or any(t > our_max for t in ticks)
         if beyond:
             pool_meta["edge_miss_count"] = pool_meta.get("edge_miss_count", 0) + 1
-            threshold = pool_meta.get(
-                "escalation_threshold", settings.EDGE_THRESHOLD_INITIAL
-            )
-            if pool_meta["edge_miss_count"] >= threshold:
+            if pool_meta["edge_miss_count"] >= settings.EDGE_THRESHOLD_INITIAL:
                 return "full_range"
         else:
             pool_meta["edge_miss_count"] = 0
@@ -119,15 +116,12 @@ def classify_pool(
                 datetime.now(timezone.utc)
                 - datetime.fromisoformat(fr_since)
             ).total_seconds()
-            if elapsed >= settings.FULL_RANGE_COOLDOWN_SECS:
-                # De-escalate with halved threshold
-                pool_meta["escalation_threshold"] = max(
-                    pool_meta.get(
-                        "escalation_threshold", settings.EDGE_THRESHOLD_INITIAL
-                    )
-                    // 2,
-                    1,
-                )
+            cooldown = pool_meta.get(
+                "cooldown_secs", settings.FULL_RANGE_COOLDOWN_SECS
+            )
+            if elapsed >= cooldown:
+                # De-escalate, but double cooldown for next time
+                pool_meta["cooldown_secs"] = cooldown * 2
                 return "edge"
             return "full_range"
 

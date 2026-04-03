@@ -39,7 +39,6 @@ SWAP_SLIPPAGE_BPS = int(os.getenv("DUST_LP_SWAP_SLIPPAGE_BPS", "100"))  # 1%
 SWAP_AMOUNT_XLM = int(os.getenv("DUST_LP_SWAP_AMOUNT", "10000000"))  # 1 XLM per token swap
 
 # Sniper-specific
-DUST_AMOUNT = int(os.getenv("DUST_LP_AMOUNT", "10"))
 EDGE_THRESHOLD_INITIAL = int(os.getenv("DUST_LP_EDGE_THRESHOLD", "3"))
 FULL_RANGE_COOLDOWN_SECS = int(os.getenv("DUST_LP_FR_COOLDOWN", "300"))
 POLL_INTERVAL_SECS = int(os.getenv("DUST_LP_POLL_INTERVAL", "30"))
